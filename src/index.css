@@ -1,0 +1,224 @@
+/* ================================
+   VARIABLES Y ESTILOS BASE
+================================== */
+:root {
+  --color-primary: #05c212;
+  --color-secondary: #0570c2;
+  --color-warning: #ffc107;
+  --color-text: #000;
+  --color-bg: #fff;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* ================================
+   LOGIN
+================================== */
+.login-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #fff, #f0f0f0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.login-box {
+  background-color: var(--color-bg);
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--color-primary);
+  max-width: 400px;
+  width: 100%;
+}
+
+.login-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-input {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.3s ease;
+}
+
+.login-input:focus {
+  border-color: var(--color-primary);
+}
+
+.login-error {
+  color: red;
+  font-size: 0.9rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* ================================
+   PROYECTOS
+================================== */
+.proyectos-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  color: var(--color-text);
+}
+
+.proyectos-titulo {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.proyectos-lista {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.btn-proyecto {
+  width: 100%;
+  text-align: left;
+  font-size: 1rem;
+}
+
+/* ================================
+   EVALUACIÓN
+================================== */
+.evaluacion-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.titulo-evaluar {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+.evaluacion-box {
+  background-color: #fff;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.categoria-evaluacion {
+  margin-bottom: 2rem;
+}
+
+.categoria-titulo {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.criterio-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding: 0.5rem 0;
+}
+
+.criterio-texto {
+  flex: 1;
+  margin-right: 1rem;
+}
+
+.criterio-select {
+  padding: 0.4rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
+}
+
+.promedio-final {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-top: 1.5rem;
+  color: var(--color-primary);
+}
+
+/* ================================
+   BOTONES
+================================== */
+.acciones-evaluacion,
+.evaluar-botones {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-warning {
+  background-color: var(--color-warning);
+  color: white;
+}
+
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: white;
+}
+
+.btn-volver {
+  background-color: #ccc;
+  color: black;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* ================================
+   UTILIDADES
+================================== */
+.w-full {
+  width: 100%;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
