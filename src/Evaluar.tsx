@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { criterios } from "./evaluacion";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
@@ -30,31 +30,6 @@ export default function Evaluar() {
     return (suma / valores.length).toFixed(2);
   };
 
-  const guardarEvaluacion = async () => {
-    const user = auth.currentUser;
-    if (!user) {
-      alert("Usuario no autenticado");
-      return;
-    }
-
-    try {
-      const docRef = doc(db, "evaluaciones", id!, "jurados", user.email!);
-      await setDoc(docRef, {
-        calificaciones,
-        promedio: parseFloat(calcularPromedio()),
-        fecha: new Date().toISOString(),
-      });
-      alert("Evaluación guardada correctamente");
-    } catch (error) {
-      console.error("Error al guardar:", error);
-      alert("Error al guardar evaluación");
-    }
-  };
-
-  const corregirEvaluacion = () => {
-    setCalificaciones({});
-  };
-
   const obtenerPromedioGeneral = async () => {
     const juradosRef = collection(db, "evaluaciones", id!, "jurados");
     const snapshot = await getDocs(juradosRef);
@@ -70,6 +45,42 @@ export default function Evaluar() {
     if (promedios.length === 0) return "0.0";
     const suma = promedios.reduce((a, b) => a + b, 0);
     return (suma / promedios.length).toFixed(2);
+  };
+
+  const guardarPromedioGeneral = async () => {
+    const promedio = await obtenerPromedioGeneral();
+    setPromedioGeneral(promedio);
+
+    const proyectoRef = doc(db, "evaluaciones", id!);
+    await setDoc(proyectoRef, { promedioGeneral: parseFloat(promedio) }, { merge: true });
+  };
+
+  const guardarEvaluacion = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      alert("Usuario no autenticado");
+      return;
+    }
+
+    try {
+      const docRef = doc(db, "evaluaciones", id!, "jurados", user.email!);
+      await setDoc(docRef, {
+        calificaciones,
+        promedio: parseFloat(calcularPromedio()),
+        fecha: new Date().toISOString(),
+      });
+
+      await guardarPromedioGeneral(); // actualiza el promedio general del proyecto
+
+      alert("Evaluación guardada correctamente");
+    } catch (error) {
+      console.error("Error al guardar:", error);
+      alert("Error al guardar evaluación");
+    }
+  };
+
+  const corregirEvaluacion = () => {
+    setCalificaciones({});
   };
 
   const exportarPDF = async () => {
@@ -94,11 +105,16 @@ export default function Evaluar() {
       pdf.addImage(imgData, "PNG", 10, 30, pdfWidth - 20, pdfHeight);
 
       pdf.setFontSize(14);
-      pdf.text(`Promedio final de jurados: ${promedioGlobal}`, 15, pdfHeight + 40);
+      pdf.text(`Promedio final del proyecto: ${promedioGlobal}`, 15, pdfHeight + 40);
 
       pdf.save(`reporte-proyecto-${id}.pdf`);
     });
   };
+
+  // Mostrar promedio general al cargar si existe
+  useEffect(() => {
+    obtenerPromedioGeneral().then(setPromedioGeneral);
+  }, [id]);
 
   return (
     <div className="evaluacion-container">
@@ -133,6 +149,12 @@ export default function Evaluar() {
         <div className="promedio-final">
           Promedio del jurado: <span className="text-primary">{calcularPromedio()}</span>
         </div>
+
+        {promedioGeneral && (
+          <div className="promedio-final">
+            Promedio final del proyecto (3 jurados): <span className="text-primary">{promedioGeneral}</span>
+          </div>
+        )}
       </div>
 
       <div className="acciones-evaluacion">
