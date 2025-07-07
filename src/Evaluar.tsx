@@ -165,7 +165,7 @@ export default function Evaluar() {
     docPDF.setFont("helvetica", "bold");
     docPDF.text("Categoría", 20, y);
     docPDF.text("Criterio de Evaluación", 60, y);
-    docPDF.text("Calificación Promedio", 160, y);
+    docPDF.text("Calificación Promedio", 130, y);
 
     y += 10;
     docPDF.setFont("helvetica", "");
